@@ -62,6 +62,22 @@ test('丢失追踪时即便光标重叠也不计分', () => {
   g.setTrackingPresent(false); g.update(0); assert.equal(g.score,0);
   g.setTrackingPresent(true); g.update(0); assert.equal(g.score,1);
 });
+test('手掌可到达屏幕两侧，球不会生成在两侧边缘', () => {
+  const canvas = {width:1000,height:800,getContext:()=>({})} as unknown as HTMLCanvasElement;
+  const g = new Game(canvas);
+  const state = g as unknown as {cursor:{targetX:number};orbs:Array<{x:number}>;spawnOrb:()=>void};
+  g.setHandCursorTarget(0.2,0.5); assert.equal(state.cursor.targetX,1000);
+  g.setHandCursorTarget(0.5,0.5); assert.ok(Math.abs(state.cursor.targetX-500)<0.001);
+  g.setHandCursorTarget(0.8,0.5); assert.equal(state.cursor.targetX,0);
+  g.setCursorTarget(0.9,0.5); assert.ok(Math.abs(state.cursor.targetX-100)<0.001);
+  const oldRandom = Math.random;
+  try {
+    Math.random = () => 0; state.spawnOrb();
+    Math.random = () => 0.999999; state.spawnOrb();
+    assert.equal(state.orbs[0].x,150);
+    assert.ok(state.orbs[1].x > 849 && state.orbs[1].x < 850);
+  } finally { Math.random = oldRandom; }
+});
 test('手势检测重置清除旧手势', () => {
   const d = new GestureDetector();
   d.reset(); assert.equal(d.getDebouncedGesture(),'none'); assert.equal(d.update([],500),'none');

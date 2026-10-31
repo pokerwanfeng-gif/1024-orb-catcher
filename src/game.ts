@@ -196,6 +196,13 @@ export class Game {
     this.cursor.targetY = normalizedY * this.canvas.height;
   }
 
+  public setHandCursorTarget(normalizedX: number, normalizedY: number) {
+    // Expand the camera's central 60% to the full screen so a tracked hand
+    // can reach both sides without leaving the camera frame.
+    const x = Math.max(0, Math.min(1, (normalizedX - 0.2) / 0.6));
+    this.setCursorTarget(x, normalizedY);
+  }
+
   public setTrackingPresent(present: boolean) { this.trackingPresent = present; }
   public reset() {
     this.score = 0;
@@ -319,9 +326,9 @@ export class Game {
   // ─── Spawn Orb ──────────────────────────────────────────────────────────────
 
   private spawnOrb() {
-    // Probability table: good 55%, great 10%, bad 28%, bomb 7%
+    // Probability table: good 45%, great 20%, bad 28%, bomb 7%
     const rand = Math.random();
-    const type: Orb['type'] = rand < 0.55 ? 'good'
+    const type: Orb['type'] = rand < 0.45 ? 'good'
                             : rand < 0.65 ? 'great'
                             : rand < 0.93 ? 'bad'
                             : 'bomb';
@@ -330,7 +337,8 @@ export class Game {
                 : type === 'bomb'  ? 21
                 : 13;
     const radius = baseR + Math.random() * 8;
-    const x = radius + Math.random() * (this.canvas.width - radius * 2);
+    const margin = Math.min(this.canvas.width / 2, Math.max(radius, this.canvas.width * 0.15));
+    const x = margin + Math.random() * (this.canvas.width - margin * 2);
     const baseSpeed = 1.6 + this.gameTimeElapsed / 20000;
     const typeMult  = type === 'great' ? 1.6 : type === 'bomb' ? 0.65 : 1.0;
     const speed = baseSpeed * typeMult * (0.8 + Math.random() * 0.4);

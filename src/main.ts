@@ -126,7 +126,7 @@ tracker.onUpdate = data => {
   $('tracking-badge').className = 'badge';
   $('tracking-badge').textContent = data.landmarks ? '追踪中' : '等待手掌';
   $('detected-gesture').textContent = data.landmarks ? `${data.hand === 'Right' ? '右手' : data.hand === 'Left' ? '左手' : '方向待确认'} · ${names[data.gesture]}` : '请将手掌放入画面';
-  if (data.landmarks) game.setCursorTarget(data.filteredX, data.filteredY);
+  if (data.landmarks) game.setHandCursorTarget(data.filteredX, data.filteredY);
   handle(latestGesture, data.hand, performance.now());
 };
 async function startCamera() {

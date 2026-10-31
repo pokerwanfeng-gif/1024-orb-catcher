@@ -1,6 +1,6 @@
 # 1024计算机科技文化节小游戏：星球捕手
 
-基于 [ihemu45/orb-catcher](https://github.com/ihemu45/orb-catcher)（MIT）制作的中文 1024计算机科技文化节版本。完整保留原作者许可证。本包包含可直接托管的 `dist/`、源代码、固定依赖清单、手部识别模型和 WASM 运行文件；游戏不依赖 CDN 或在线字体。
+基于 [ihemu45/orb-catcher](https://github.com/ihemu45/orb-catcher)（MIT）和 [1024计算机科技文化节版本](https://github.com/xinyuchen-pku/1024-orb-catcher)制作。完整保留原作者许可证。源码仓库包含固定依赖清单、手部识别模型和 WASM 运行文件；游戏不依赖 CDN 或在线字体。独立试玩包另外包含构建好的 `dist/`。
 
 ## 直接运行完整包
 
@@ -21,6 +21,8 @@ macOS：双击 `启动游戏.command`，在浏览器打开终端显示的地址�
 6. 每局固定 30 秒，握拳、手部离开镜头和切到后台均不会暂停或增加时间。结束后展示结果。按最终得分（含连击奖励）评奖：35–49分为银奖，50分及以上为金奖；只显示最高奖项，低于35分不显示奖牌。
 7. 输入昵称并记录成绩，进入当前浏览器本机前 10 名榜单。也可直接点赞，以“星际玩家”记录并重玩。重玩仍必须阅读规则 5 秒。同分按达成时间排序。结束界面的“重置并返回首页”会记录本局成绩、保留榜单并清空当前局，重新点赞后仍需阅读规则5秒。
 
+球在屏幕中间区域出现，手掌横向移动范围会映射到整个屏幕；金球出现概率为 20%。
+
 榜单不是跨设备共享榜单；更换浏览器、清除网站数据会影响榜单。浏览器禁止存储时显示提示并在当前页面临时保留。演示模式使用模拟按钮和鼠标，成绩不会存入正式榜单。
 
 ## 源码开发与验证
@@ -40,7 +42,7 @@ npm run build
 
 ## GitHub Pages
 
-仓库：[xinyuchen-pku/1024-orb-catcher](https://github.com/xinyuchen-pku/1024-orb-catcher)，发布分支 `main`。游戏地址：https://xinyuchen-pku.github.io/1024-orb-catcher/ 。
+仓库：[pokerwanfeng-gif/1024-orb-catcher](https://github.com/pokerwanfeng-gif/1024-orb-catcher)，发布分支 `main`。游戏地址：https://pokerwanfeng-gif.github.io/1024-orb-catcher/ 。
 
 已准备 `.github/workflows/deploy.yml`：推送 main 后，安装固定依赖、运行测试、构建并发布 dist。仓库 Settings → Pages → Source 选择 GitHub Actions。Vite 使用相对 base，兼容仓库子路径与自定义域名。上线后还须验证 Actions 成功、实际 Pages 地址及摄像头权限。
 
