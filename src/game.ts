@@ -326,9 +326,9 @@ export class Game {
   // ─── Spawn Orb ──────────────────────────────────────────────────────────────
 
   private spawnOrb() {
-    // Probability table: good 50%, great 15%, bad 28%, bomb 7%
+    // Probability table: good 45%, great 20%, bad 28%, bomb 7%
     const rand = Math.random();
-    const type: Orb['type'] = rand < 0.50 ? 'good'
+    const type: Orb['type'] = rand < 0.45 ? 'good'
                             : rand < 0.65 ? 'great'
                             : rand < 0.93 ? 'bad'
                             : 'bomb';
